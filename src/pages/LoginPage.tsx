@@ -12,21 +12,13 @@ import {
   IonTitle,
 } from "@ionic/react";
 import { personCircleOutline } from "ionicons/icons";
-import { useHistory } from "react-router-dom";
-import useSQLiteDB from "../composables/useSQLiteDB"; // Asegúrate de que la ruta sea correcta
 
 const LoginPage: React.FC = () => {
   const [scannedCode, setScannedCode] = useState("");
-  const { checkUserExists } = useSQLiteDB();
-  const history = useHistory();
 
-  const handleLogin = async () => {
-    const userExists = await checkUserExists(scannedCode);
-    if (userExists) {
-      history.push('/welcome'); // Redirige al usuario si existe
-    } else {
-      alert('Usuario no encontrado o código incorrecto.');
-    }
+  const handleLogin = () => {
+    console.log("Código para iniciar sesión:", scannedCode);
+    // Aquí puedes agregar tu lógica para manejar el inicio de sesión con el código
   };
 
   return (
