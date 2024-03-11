@@ -1,0 +1,7 @@
+{
+  "name": "unisa",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
