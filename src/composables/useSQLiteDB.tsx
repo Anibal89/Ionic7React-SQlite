@@ -16,8 +16,7 @@ const useSQLiteDB = () => {
 
       sqlite.current = new SQLiteConnection(CapacitorSQLite);
       const ret = await sqlite.current.checkConnectionsConsistency();
-      const isConn = (await sqlite.current.isConnection("Unisa", false))
-        .result;
+      const isConn = (await sqlite.current.isConnection("Unisa", false)).result;
 
       if (ret.result && isConn) {
         db.current = await sqlite.current.retrieveConnection("Unisa", false);
@@ -62,11 +61,32 @@ const useSQLiteDB = () => {
   const initializeTables = async () => {
     performSQLAction(async (db: SQLiteDBConnection | undefined) => {
       const queryCreateTable = `
+
       CREATE TABLE IF NOT EXISTS Anime (
-      id INTEGER PRIMARY KEY NOT NULL,
-      name TEXT NOT NULL
+       id INTEGER PRIMARY KEY NOT NULL,
+       name TEXT NOT NULL
       );
+
+      CREATE TABLE IF NOT EXISTS Rol (
+        Id_Rol INTEGER PRIMARY KEY NOT NULL,
+        Nombre_Rol TEXT NOT NULL
+      );
+
+      INSERT or IGNORE INTO Rol (Id_Rol,Nombre_Rol) VALUES 
+      (1,'Dev'),
+      (2,'Web Master');
+
+      CREATE TABLE IF NOT EXISTS Usuario (
+        Id_Usuario INTEGER PRIMARY KEY NOT NULL,
+        Nombre_Usuario TEXT NOT NULL,
+        Id_Rol INTEGER NOT NULL,
+        CONSTRAINT fk_Id_Rol FOREIGN KEY (Id_Rol) REFERENCES Rol(Id_Rol)
+      );
+
+      INSERT or IGNORE INTO Usuario (Id_Usuario,Nombre_Usuario,Id_Rol) VALUES
+      (1,'Luis Zapeta',1);
     `;
+
       const respCT = await db?.execute(queryCreateTable);
       console.log(`res: ${JSON.stringify(respCT)}`);
     });

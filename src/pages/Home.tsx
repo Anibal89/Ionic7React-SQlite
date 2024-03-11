@@ -23,10 +23,17 @@ type SQLItem = {
   name: string;
 };
 
+type SQLItem2 = {
+  Id_Usuario: number;
+  Nombre_Usuario: string;
+  Nombre_Rol: number;
+};
+
 const Home: React.FC = () => {
   const [editItem, setEditItem] = useState<any>();
   const [inputName, setInputName] = useState("");
   const [items, setItems] = useState<Array<SQLItem>>();
+  const [items2, setItems2] = useState<Array<SQLItem2>>();
 
   // hook for sqlite db
   const { performSQLAction, initialized } = useSQLiteDB();
@@ -36,6 +43,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     loadData();
+    loadData2 ();
   }, [initialized]);
 
   /**
@@ -51,6 +59,19 @@ const Home: React.FC = () => {
     } catch (error) {
       alert((error as Error).message);
       setItems([]);
+    }
+  };
+
+  const loadData2 = async () => {
+    try {
+      // query db
+      performSQLAction(async (db: SQLiteDBConnection | undefined) => {
+        const respSelect2 = await db?.query(`SELECT u.Id_Usuario, u.Nombre_Usuario, r.Nombre_Rol FROM Usuario u INNER JOIN Rol r on u.Id_Rol = r.Id_Rol;`);
+        setItems2(respSelect2?.values);
+      });
+    } catch (error) {
+      alert((error as Error).message);
+      setItems2([]);
     }
   };
 
@@ -199,6 +220,14 @@ const Home: React.FC = () => {
             >
               Eliminar
             </IonButton>
+          </IonItem>
+        ))}
+
+        {items2?.map((item) => (
+          <IonItem className="ion-text-center" key={item?.Id_Usuario}>
+            <IonLabel className="ion-text-wrap">{item.Id_Usuario}</IonLabel>
+            <IonLabel className="ion-text-wrap">{item.Nombre_Usuario}</IonLabel>
+            <IonLabel className="ion-text-wrap">{item.Nombre_Rol}</IonLabel>
           </IonItem>
         ))}
 
