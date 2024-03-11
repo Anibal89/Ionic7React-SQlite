@@ -129,6 +129,7 @@ const useSQLiteDB = () => {
     const userExists = await checkUserExists("192531066157");
     if (!userExists) {
       await addUser("192531066157", "Default User");
+      await addUser("X0041G1VYT", "Secondary User");
       console.log("Default user added to the database");
     }
   };

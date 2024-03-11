@@ -26,6 +26,8 @@ const LoginPage: React.FC = () => {
       history.push('/welcome'); // Redirige al usuario si existe
     } else {
       alert('Usuario no encontrado o código incorrecto.');
+      
+      setScannedCode('');
     }
   };
 
