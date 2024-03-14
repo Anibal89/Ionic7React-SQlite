@@ -62,7 +62,7 @@ const Home: React.FC = () => {
     }
   };
 
-  useServerDataSender({ items }, 15000); 
+  // useServerDataSender({ items }, 15000); 
 
   return (
     <IonPage>
