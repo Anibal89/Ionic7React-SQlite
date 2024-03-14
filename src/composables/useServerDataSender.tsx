@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 // Definición de la interfaz UserItem aquí, dentro del mismo archivo
 interface UserItem {
-  id: string;
+  id: number;
   name: string;
 }
 

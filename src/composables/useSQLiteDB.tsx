@@ -5,6 +5,12 @@ import {
   CapacitorSQLite,
 } from "@capacitor-community/sqlite";
 
+
+type UserItem = {
+  id: number;
+  name: string;
+};
+
 const useSQLiteDB = () => {
   const db = useRef<SQLiteDBConnection | null>(null);
   const sqlite = useRef<SQLiteConnection | null>(null);
@@ -30,7 +36,6 @@ const useSQLiteDB = () => {
         );
       }
       await initializeTables();
-      await addDefaultUser(); // Add default user after initializing tables
     };
 
     initializeDB().then(() => {
@@ -67,16 +72,26 @@ const useSQLiteDB = () => {
     await performSQLAction(async (db: SQLiteDBConnection) => {
       const queryCreateUsersTable = `
         CREATE TABLE IF NOT EXISTS Users (
-        id TEXT PRIMARY KEY NOT NULL,
+        id INTEGER PRIMARY KEY NOT NULL,
         name TEXT NOT NULL
         );  
       `;
-      const respCT = await db?.execute(queryCreateUsersTable);
-      console.log(`res: ${JSON.stringify(respCT)}`);
+      await db.execute(queryCreateUsersTable);
     });
   };
 
-  const checkUserExists = async (userId: string): Promise<boolean> => {
+  const loadData = async (): Promise<UserItem[]> => {
+    let users: UserItem[] = [];
+    await performSQLAction(async (db: SQLiteDBConnection) => {
+      const result = await db.query("SELECT * FROM Users");
+      if (result.values) {
+        users = result.values.map(user => ({ id: user.id, name: user.name }));
+      }
+    });
+    return users;
+  };
+
+  const checkUserExists = async (userId: number): Promise<boolean> => {
     let userExists = false;
     await performSQLAction(async (db: SQLiteDBConnection) => {
       const result = await db.query(`SELECT * FROM Users WHERE id = ?`, [userId]);
@@ -87,29 +102,32 @@ const useSQLiteDB = () => {
     return userExists;
   };
 
-  const addUser = async (userId: string, userName: string): Promise<void> => {
+  const addUser = async (userId: number, userName: string): Promise<void> => {
     await performSQLAction(async (db: SQLiteDBConnection) => {
-        const queryInsertUser = `
-            INSERT INTO Users (id, name) VALUES (?, ?);
-        `;
-        // Cambia la tipificación a any para depuración
-        const params: any[] = [userId, userName];
+      const queryInsertUser = `INSERT INTO Users (id, name) VALUES (?, ?);`;
+      const params: any[] = [userId, userName];
         await db.execute(`INSERT INTO Users (id, name) VALUES ('${userId}', '${userName}')`);
     });
-};
+  };
 
-  // modificar código ya que permite inyecciones SQL
-  const addDefaultUser = async () => {
-    const userExists = await checkUserExists("192531066157");
+  const deleteUser = async (userId: number): Promise<void> => {
+    await performSQLAction(async (db: SQLiteDBConnection) => {
+      const queryDeleteUser = `DELETE FROM Users WHERE id=?;`;
+      await db.run(queryDeleteUser, [userId]);
+    });
+  };
+
+  const addUserIfNeeded = async (userId: number, userName: string): Promise<void> => {
+    const userExists = await checkUserExists(userId);
     if (!userExists) {
-      await addUser("192531066157", "Default User");
-      await addUser("192531066158", "Secondary User");
-      await addUser("192531066159", "Israel");
-      console.log("Default user added to the database");
+      await addUser(userId, userName);
+      console.log("User added to the database");
+    } else {
+      console.log("User already exists, not added to the database");
     }
   };
 
-  return { performSQLAction, initialized, checkUserExists, addUser };
+  return { performSQLAction, initialized, checkUserExists, addUserIfNeeded, addUser, deleteUser, loadData };
 };
 
 export default useSQLiteDB;

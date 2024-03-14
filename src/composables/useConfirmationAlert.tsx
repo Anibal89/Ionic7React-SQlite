@@ -4,19 +4,21 @@ import { IonAlert } from "@ionic/react";
 const useConfirmationAlert = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const [confirmAction, setConfirmAction] = useState<() => void>();
+  // Mantén confirmAction como una función opcional que no retorna nada.
+  const [confirmAction, setConfirmAction] = useState<(() => void) | null>(null);
 
-  const showConfirmationAlert = (
-    message: React.SetStateAction<string>,
-    onConfirm: () => void
-  ) => {
+  const showConfirmationAlert = (message: string, onConfirm: () => void) => {
     setAlertMessage(message);
+    // Asigna directamente la función onConfirm a confirmAction.
     setConfirmAction(() => onConfirm);
     setShowAlert(true);
   };
 
   const handleConfirm = () => {
-    confirmAction && confirmAction();
+    // Ejecuta la acción de confirmación si existe.
+    if (confirmAction) {
+      confirmAction();
+    }
     setShowAlert(false);
   };
 
