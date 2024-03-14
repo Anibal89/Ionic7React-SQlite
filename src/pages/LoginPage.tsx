@@ -21,13 +21,20 @@ const LoginPage: React.FC = () => {
   const history = useHistory();
 
   const handleLogin = async () => {
-    const userExists = await checkUserExists(scannedCode);
-    if (userExists) {
-      history.push('/welcome'); // Redirige al usuario si existe
+    // Verifica si scannedCode es numérico y convierte la cadena a un número.
+    const scannedCodeNum = Number(scannedCode);
+    // Comprueba si scannedCode es un número válido y no es NaN (Not a Number)
+    if (!isNaN(scannedCodeNum)) {
+      const userExists = await checkUserExists(scannedCodeNum);
+      if (userExists) {
+        history.push("/welcome"); // Redirige al usuario si existe.
+      } else {
+        alert("Usuario no encontrado o código incorrecto.");
+        setScannedCode("");
+      }
     } else {
-      alert('Usuario no encontrado o código incorrecto.');
-      
-      setScannedCode('');
+      alert("Por favor, ingresa un código válido compuesto solo por números.");
+      setScannedCode("");
     }
   };
 
