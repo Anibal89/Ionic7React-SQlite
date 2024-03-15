@@ -4,6 +4,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
 import LoginPage from './pages/LoginPage';
 import WelcomePage from './pages/WelcomePage';
+import ExtruderStatusPage from './pages/ExtruderStatusPage'; // Asegúrate de que esta línea esté descomentada y correcta
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -33,8 +34,11 @@ const App: React.FC = () => (
         <Route exact path="/welcome">
           <WelcomePage /> 
         </Route>
+        <Route exact path="/login">
+          <Redirect to="/login" />
+        </Route>
         <Route exact path="/">
-          <Redirect to="/login" /> 
+          <ExtruderStatusPage />
         </Route>
         <Route exact path="/DetAsignacion">
            <DetAsignacion/>
