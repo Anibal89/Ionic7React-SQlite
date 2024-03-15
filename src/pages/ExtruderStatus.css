@@ -1,0 +1,30 @@
+.card-header-custom {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    text-align: center;
+  }
+  
+  .machine-icon img {
+    width: 170px; 
+    height: auto;
+    margin-right: 10px; /* Espacio entre el icono y el título */
+  }
+  
+  .machine-title {
+    flex-grow: 1;
+  }
+
+  /* ExtruderStatus.css */
+.filter-button {
+    --padding-start: 20px; /* Espaciado interno izquierdo */
+    --padding-end: 20px; /* Espaciado interno derecho */
+    --padding-top: 10px; /* Espaciado interno superior */
+    --padding-bottom: 10px; /* Espaciado interno inferior */
+    width: 150px; /* Ancho del botón */
+    height: 50px; /* Altura del botón */
+    margin: 0 10px; /* Margen para separar botones */
+    border-radius: 20px; /* Bordes redondeados */
+  }
+  
+  
