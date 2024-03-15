@@ -3,6 +3,7 @@ import {
   IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton
 } from '@ionic/react';
 import './ExtruderStatus.css';
+import DetAsignacion from './Extrusion/DetAsignacion';
 
 enum MachineStatus {
   Available = 'available',
@@ -109,6 +110,7 @@ const ExtruderStatusPage: React.FC = () => {
 
   return (
     <IonContent>
+       <DetAsignacion/>
       <div style={{ textAlign: 'center', padding: '20px' }}>
         <IonButton color="medium" className="filter-button" onClick={() => { setFilterStatus(null); setShowParoOptions(false); }}>Todos</IonButton>
         <IonButton color="success" className="filter-button" onClick={() => { setFilterStatus(MachineStatus.Available); setShowParoOptions(false); }}>Disponibles</IonButton>

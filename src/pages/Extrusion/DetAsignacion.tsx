@@ -62,8 +62,8 @@ const DetAsignacion: React.FC = () => {
     //   </IonHeader>
     //   <IonContent ref={page}>
     <>
-        <IonButton id="open-modal" expand="block" color={"dark"}>
-          Ventana Modal
+        <IonButton id="open-modal"  color={"dark"}>
+          Modal Extrusion
         </IonButton>
         <IonModal
           ref={modal}
