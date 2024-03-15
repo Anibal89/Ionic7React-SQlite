@@ -3,4 +3,11 @@
     --width: 100vw; /* Ancho igual al ancho de la ventana */
     --max-width: 100%; /* Ancho máximo para asegurar que no sea demasiado grande */
     --max-height: 100%; /* Altura máxima para asegurar que no sea demasiado grande */
-  }
+}
+.IonCardDate{
+  width: 100%;
+}
+
+/* .IonGrid{
+  --ion-grid-column-padding:20px
+} */
