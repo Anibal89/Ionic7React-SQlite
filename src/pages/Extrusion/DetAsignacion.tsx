@@ -53,7 +53,11 @@ const DetAsignacion: React.FC<estadoModal> = ({ estado }) => {
       modal.current?.dismiss();
       history.push("/");
     }
+  
 
+  useEffect(() => {
+    setPresentingElement(page.current);
+  }, []);
 
 
   async function canDismiss(data?: any, role?: string) {
