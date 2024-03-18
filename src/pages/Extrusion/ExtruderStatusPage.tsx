@@ -92,6 +92,8 @@ const getCardColor = (status: MachineStatus): string => {
 
 const ExtruderStatusPage: React.FC=() => {
 
+  const [estado,setEstado] = useState<boolean>(true);
+
   const [filterStatus, setFilterStatus] = useState<MachineStatus | null>(null);
   const [showParoOptions, setShowParoOptions] = useState<boolean>(false);
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false); 
@@ -118,23 +120,25 @@ const ExtruderStatusPage: React.FC=() => {
   const handleLoginSuccess = (userId: string) => {
     console.log(`Login exitoso para el usuario: ${userId}`);
     setUserLoggedIn(true); // Establece que el usuario ha iniciado sesión correctamente
+    setEstado(true);
   };
 
   const handleLoginError = () => {
     console.log('Error en el login, código incorrecto');
+    setEstado(false);
     // Manejo del error
   };
 
   if (userLoggedIn) {
-    return   <DetAsignacion />; // Si el usuario ha iniciado sesión, muestra directamente el componente DetAsignacion
-  }
+   return   <DetAsignacion estado={estado} />; // Si el usuario ha iniciado sesión, muestra directamente el componente DetAsignacion
+   }
 
 
   return (
     <IonContent>
          <InvisibleLogin onLoginSuccess={handleLoginSuccess} onLoginError={handleLoginError} />
-         {userLoggedIn && <DetAsignacion />}
-      <DetAsignacion />
+         {userLoggedIn && <DetAsignacion estado={estado} />}
+    
       <div style={{ textAlign: 'center', padding: '20px' }}>
         <IonButton color="medium" className="filter-button" onClick={() => { setFilterStatus(null); setShowParoOptions(false); }}>Todos</IonButton>
         <IonButton color="success" className="filter-button" onClick={() => { setFilterStatus(MachineStatus.Available); setShowParoOptions(false); }}>Disponibles</IonButton>

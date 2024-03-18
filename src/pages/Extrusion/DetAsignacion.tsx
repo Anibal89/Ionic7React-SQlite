@@ -28,13 +28,18 @@ import DatosT from "./components/data/OrdenTrabajo";
 import "./css/DetAsignaciom.css";
 
 import { optionsOutline, exitOutline } from "ionicons/icons";
+import { Redirect, useHistory } from "react-router";
 
 //Typado de Estado
 
-const DetAsignacion: React.FC = () => {
+interface estadoModal {
+  estado: boolean;
+}
+
+const DetAsignacion: React.FC<estadoModal> = ({ estado })=> {
   //Estado de Renderizado
 
-  const [estado, setEstado] = useState<boolean>(false);
+  const [cambio, seCambio] = useState<boolean>(false);
 
   const modal = useRef<HTMLIonModalElement>(null);
   const page = useRef(null);
@@ -46,8 +51,12 @@ const DetAsignacion: React.FC = () => {
     setPresentingElement(page.current);
   }, []);
 
+  const history = useHistory()
+
   function dismiss() {
     modal.current?.dismiss();
+    history.push("/");
+
   }
 
   async function canDismiss(data?: any, role?: string) {
@@ -60,14 +69,14 @@ const DetAsignacion: React.FC = () => {
 
   const { Id, Maquina, Detalle_Material, Foto, Estado, Hora } = OrdenTrabajo;
 
-  console.log(estado);
+
 
   return (
     <>
       {/* <IonButton id="open-modal" color={"dark"}>
         Modal Extrusion
       </IonButton> */}
-      {!estado ? (
+      {!cambio ? (
         <IonModal
           isOpen={estado}
           ref={modal}
@@ -177,7 +186,7 @@ const DetAsignacion: React.FC = () => {
                   <br></br>
 
                   <IonButton
-                    onClick={() => setEstado(true)}
+                    onClick={() => seCambio(true)}
                     expand="full"
                     color={"success"}
                   >
@@ -282,8 +291,6 @@ const DetAsignacion: React.FC = () => {
         </IonModal>
       )}
     </>
-    //   </IonContent>
-    // </IonPage>
   );
 };
 
