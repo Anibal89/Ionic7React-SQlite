@@ -4,6 +4,7 @@ import {
 } from '@ionic/react';
 import DetAsignacion from './DetAsignacion';
 import './css/ExtruderStatus.css';
+import InvisibleLogin from '../../components/InvisibleLogin';
 
 enum MachineStatus {
   Available = 'available',
@@ -91,6 +92,7 @@ const getCardColor = (status: MachineStatus): string => {
 const ExtruderStatusPage: React.FC = () => {
   const [filterStatus, setFilterStatus] = useState<MachineStatus | null>(null);
   const [showParoOptions, setShowParoOptions] = useState<boolean>(false);
+  const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false); 
 
   // Filtramos las máquinas basándonos en si se seleccionó un estado específico o si estamos viendo todos los paros.
   let filteredMachines: Machine[] = [];
@@ -108,9 +110,26 @@ const ExtruderStatusPage: React.FC = () => {
       machine.status === MachineStatus.ParoInsumos);
   }
 
+  const handleLoginSuccess = (userId: string) => {
+    console.log(`Login exitoso para el usuario: ${userId}`);
+    setUserLoggedIn(true); // Establece que el usuario ha iniciado sesión correctamente
+  };
+
+  const handleLoginError = () => {
+    console.log('Error en el login, código incorrecto');
+    // Manejo del error
+  };
+
+  if (userLoggedIn) {
+    return   <DetAsignacion />; // Si el usuario ha iniciado sesión, muestra directamente el componente DetAsignacion
+  }
+
+
   return (
     <IonContent>
-       <DetAsignacion/>
+         <InvisibleLogin onLoginSuccess={handleLoginSuccess} onLoginError={handleLoginError} />
+         {userLoggedIn && <DetAsignacion />}
+      <DetAsignacion />
       <div style={{ textAlign: 'center', padding: '20px' }}>
         <IonButton color="medium" className="filter-button" onClick={() => { setFilterStatus(null); setShowParoOptions(false); }}>Todos</IonButton>
         <IonButton color="success" className="filter-button" onClick={() => { setFilterStatus(MachineStatus.Available); setShowParoOptions(false); }}>Disponibles</IonButton>
