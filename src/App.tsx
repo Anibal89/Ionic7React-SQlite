@@ -41,7 +41,7 @@ const App: React.FC = () => (
           <ExtruderStatusPage />
         </Route>
         <Route exact path="/DetAsignacion">
-           <DetAsignacion/>
+           <DetAsignacion estado = {false}/>
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
