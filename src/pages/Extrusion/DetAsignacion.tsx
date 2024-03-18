@@ -24,10 +24,17 @@ import {
 } from "@ionic/react";
 
 import { close } from "ionicons/icons";
-import DatosT from './components/data/OrdenTrabajo'
+import DatosT from "./components/data/OrdenTrabajo";
 import "./css/DetAsignaciom.css";
 
+import { optionsOutline, exitOutline } from "ionicons/icons";
+
+//Typado de Estado
+
 const DetAsignacion: React.FC = () => {
+  //Estado de Renderizado
+
+  const [estado, setEstado] = useState<boolean>(false);
 
   const modal = useRef<HTMLIonModalElement>(null);
   const page = useRef(null);
@@ -47,25 +54,22 @@ const DetAsignacion: React.FC = () => {
     return role !== "gesture";
   }
 
-//Consumo de datos
+  //Consumo de datos
 
- const {OrdenTrabajo} = DatosT();
+  const { OrdenTrabajo } = DatosT();
 
- const {Id, Maquina, Detalle_Material, Foto, Estado, Hora} = OrdenTrabajo;
+  const { Id, Maquina, Detalle_Material, Foto, Estado, Hora } = OrdenTrabajo;
+
+  console.log(estado);
 
   return (
-    // <IonPage ref={page}>
-    //   <IonHeader>
-    //     <IonToolbar>
-    //       <IonTitle>Extrusión</IonTitle>
-    //     </IonToolbar>
-    //   </IonHeader>
-    //   <IonContent ref={page}>
     <>
-        <IonButton id="open-modal"  color={"dark"}>
-          Modal Extrusion
-        </IonButton>
+      {/* <IonButton id="open-modal" color={"dark"}>
+        Modal Extrusion
+      </IonButton> */}
+      {!estado ? (
         <IonModal
+          isOpen={estado}
           ref={modal}
           trigger="open-modal"
           canDismiss={canDismiss}
@@ -172,7 +176,11 @@ const DetAsignacion: React.FC = () => {
                   </IonRow>
                   <br></br>
 
-                  <IonButton expand="full" color={"success"}>
+                  <IonButton
+                    onClick={() => setEstado(true)}
+                    expand="full"
+                    color={"success"}
+                  >
                     Aceptar
                   </IonButton>
                 </IonCol>
@@ -180,7 +188,100 @@ const DetAsignacion: React.FC = () => {
             </IonGrid>
           </IonContent>
         </IonModal>
-        </>
+      ) : (
+        <IonModal
+          isOpen={estado}
+          ref={modal}
+          trigger="open-modal"
+          canDismiss={canDismiss}
+          presentingElement={presentingElement!}
+          className="custom-modal"
+        >
+          <IonHeader>
+            <IonToolbar>
+              <IonTitle>Detalle Extrusion</IonTitle>
+              <IonButtons slot="end">
+                <IonButton onClick={() => dismiss()}>
+                  <IonIcon icon={close} color="danger"></IonIcon>
+                </IonButton>
+              </IonButtons>
+            </IonToolbar>
+          </IonHeader>
+          <IonContent>
+            <IonGrid
+              className="ion-text-center"
+              style={{
+                margin: "auto",
+                marginTop: "50vh",
+                transform: "translateY(-50%)",
+              }}
+            >
+              <IonRow className="ion-justify-content-center">
+              <IonCol size="auto">
+                  <IonButton onClick={dismiss} color={"light"}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <IonText>Devolver Material</IonText>
+                      <img
+                        src="https://files.signuscorp.com/?business=1&file=MTY1Zjg4ODU3NDkyNDM="
+                        alt="close"
+                        style={{ width: "25px", marginRight: "10px"}}
+                      />
+                    </div>
+                  </IonButton>
+                </IonCol>
+
+                <IonCol size="auto">
+                  <IonButton onClick={dismiss} color={"medium"}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <IonText>Registrar Bobina</IonText>
+                      <img
+                        src="https://files.signuscorp.com/?business=1&file=MTY1Zjg4NjZhNzA5MDk="
+                        alt="close"
+                        style={{ width: "30px", marginRight: "10px"}}
+                      />
+                    </div>
+                  </IonButton>
+                </IonCol>
+
+                <IonCol size="auto">
+                  <IonButton onClick={dismiss} color={"light"}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <IonText>Salir</IonText>
+                      <img
+                        src="https://files.signuscorp.com/?business=1&file=MTY1Zjg4NDQxOGM4NDY="
+                        alt="close"
+                        style={{ width: "25px", marginRight: "10px" }}
+                      />
+                    </div>
+                  </IonButton>
+                </IonCol>
+              </IonRow>
+            </IonGrid>
+          </IonContent>
+        </IonModal>
+      )}
+    </>
     //   </IonContent>
     // </IonPage>
   );

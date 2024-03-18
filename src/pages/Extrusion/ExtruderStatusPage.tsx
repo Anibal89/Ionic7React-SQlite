@@ -89,7 +89,9 @@ const getCardColor = (status: MachineStatus): string => {
   }
 };
 
-const ExtruderStatusPage: React.FC = () => {
+
+const ExtruderStatusPage: React.FC=() => {
+
   const [filterStatus, setFilterStatus] = useState<MachineStatus | null>(null);
   const [showParoOptions, setShowParoOptions] = useState<boolean>(false);
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false); 
@@ -109,6 +111,9 @@ const ExtruderStatusPage: React.FC = () => {
       machine.status === MachineStatus.ParoCalidad || 
       machine.status === MachineStatus.ParoInsumos);
   }
+  
+
+
 
   const handleLoginSuccess = (userId: string) => {
     console.log(`Login exitoso para el usuario: ${userId}`);
