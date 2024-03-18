@@ -24,8 +24,8 @@ import {
 } from "@ionic/react";
 
 import { close } from "ionicons/icons";
-import "./DetAsignaciom.css";
-import DatosT from '../../components/extrusion/data/OrdenTrabajo'; 
+import DatosT from './components/data/OrdenTrabajo'
+import "./css/DetAsignaciom.css";
 
 const DetAsignacion: React.FC = () => {
 

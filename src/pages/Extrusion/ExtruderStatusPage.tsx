@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import {
   IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton
 } from '@ionic/react';
-import './ExtruderStatus.css';
-import DetAsignacion from './Extrusion/DetAsignacion';
+import DetAsignacion from './DetAsignacion';
+import './css/ExtruderStatus.css';
 
 enum MachineStatus {
   Available = 'available',
