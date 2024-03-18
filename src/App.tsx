@@ -34,11 +34,11 @@ const App: React.FC = () => (
         <Route exact path="/welcome">
           <WelcomePage /> 
         </Route>
-        <Route exact path="/login">
-          <Redirect to="/login" />
+        <Route exact path="/ExtruderStatusPage">
+          <ExtruderStatusPage />
         </Route>
         <Route exact path="/">
-          <ExtruderStatusPage />
+          <Redirect to="/ExtruderStatusPage"/>
         </Route>
         <Route exact path="/DetAsignacion">
            <DetAsignacion estado = {false}/>
@@ -48,4 +48,4 @@ const App: React.FC = () => (
   </IonApp>
 );
 
-export default App;
+export default App;

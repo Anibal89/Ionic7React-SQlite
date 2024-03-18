@@ -36,7 +36,7 @@ interface estadoModal {
   estado: boolean;
 }
 
-const DetAsignacion: React.FC<estadoModal> = ({ estado })=> {
+const DetAsignacion: React.FC<estadoModal> = ({ estado }) => {
   //Estado de Renderizado
 
   const [cambio, seCambio] = useState<boolean>(false);
@@ -47,17 +47,14 @@ const DetAsignacion: React.FC<estadoModal> = ({ estado })=> {
   const [presentingElement, setPresentingElement] =
     useState<HTMLElement | null>(null);
 
-  useEffect(() => {
-    setPresentingElement(page.current);
-  }, []);
+    const history = useHistory();
 
-  const history = useHistory()
+    function dismiss() {
+      modal.current?.dismiss();
+      history.push("/");
+    }
 
-  function dismiss() {
-    modal.current?.dismiss();
-    history.push("/");
 
-  }
 
   async function canDismiss(data?: any, role?: string) {
     return role !== "gesture";
@@ -68,8 +65,7 @@ const DetAsignacion: React.FC<estadoModal> = ({ estado })=> {
   const { OrdenTrabajo } = DatosT();
 
   const { Id, Maquina, Detalle_Material, Foto, Estado, Hora } = OrdenTrabajo;
-
-
+  
 
   return (
     <>
@@ -81,7 +77,7 @@ const DetAsignacion: React.FC<estadoModal> = ({ estado })=> {
           isOpen={estado}
           ref={modal}
           trigger="open-modal"
-          canDismiss={canDismiss}
+          onClick={canDismiss}
           presentingElement={presentingElement!}
           className="custom-modal"
         >
@@ -226,7 +222,7 @@ const DetAsignacion: React.FC<estadoModal> = ({ estado })=> {
               }}
             >
               <IonRow className="ion-justify-content-center">
-              <IonCol size="auto">
+                <IonCol size="auto">
                   <IonButton onClick={dismiss} color={"light"}>
                     <div
                       style={{
@@ -240,7 +236,7 @@ const DetAsignacion: React.FC<estadoModal> = ({ estado })=> {
                       <img
                         src="https://files.signuscorp.com/?business=1&file=MTY1Zjg4ODU3NDkyNDM="
                         alt="close"
-                        style={{ width: "25px", marginRight: "10px"}}
+                        style={{ width: "25px", marginRight: "10px" }}
                       />
                     </div>
                   </IonButton>
@@ -260,7 +256,7 @@ const DetAsignacion: React.FC<estadoModal> = ({ estado })=> {
                       <img
                         src="https://files.signuscorp.com/?business=1&file=MTY1Zjg4NjZhNzA5MDk="
                         alt="close"
-                        style={{ width: "30px", marginRight: "10px"}}
+                        style={{ width: "30px", marginRight: "10px" }}
                       />
                     </div>
                   </IonButton>
