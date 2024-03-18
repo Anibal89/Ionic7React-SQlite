@@ -5,6 +5,8 @@ import {
 import DetAsignacion from './DetAsignacion';
 import './css/ExtruderStatus.css';
 import InvisibleLogin from '../../components/InvisibleLogin';
+import useConfirmationAlert from '../../composables/useConfirmationAlert';
+
 
 enum MachineStatus {
   Available = 'available',
@@ -97,6 +99,7 @@ const ExtruderStatusPage: React.FC=() => {
   const [filterStatus, setFilterStatus] = useState<MachineStatus | null>(null);
   const [showParoOptions, setShowParoOptions] = useState<boolean>(false);
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false); 
+  const { showConfirmationAlert, ConfirmationAlert } = useConfirmationAlert();
 
   // Filtramos las máquinas basándonos en si se seleccionó un estado específico o si estamos viendo todos los paros.
   let filteredMachines: Machine[] = [];
@@ -120,14 +123,17 @@ const ExtruderStatusPage: React.FC=() => {
   const handleLoginSuccess = (userId: string) => {
     console.log(`Login exitoso para el usuario: ${userId}`);
     setUserLoggedIn(true); // Establece que el usuario ha iniciado sesión correctamente
-    setEstado(true);
+    showConfirmationAlert(`Bienvenido al sistema, usuario ${userId}.`, () => {});
+    setEstado(true); // Dependiendo de lo que esto signifique en tu contexto
   };
 
   const handleLoginError = () => {
     console.log('Error en el login, código incorrecto');
-    setEstado(false);
-    // Manejo del error
+    setUserLoggedIn(false);
+    showConfirmationAlert("Usuario no encontrado, intente nuevamente.", () => {});
+    setEstado(false); // Asumiendo que esto controla la visualización de algún estado específico
   };
+
 
   if (userLoggedIn) {
    return   <DetAsignacion estado={estado} />; // Si el usuario ha iniciado sesión, muestra directamente el componente DetAsignacion
@@ -136,8 +142,9 @@ const ExtruderStatusPage: React.FC=() => {
 
   return (
     <IonContent>
-         <InvisibleLogin onLoginSuccess={handleLoginSuccess} onLoginError={handleLoginError} />
-         {userLoggedIn && <DetAsignacion estado={estado} />}
+          <InvisibleLogin onLoginSuccess={handleLoginSuccess} onLoginError={handleLoginError} />
+      {userLoggedIn && <DetAsignacion estado={estado} />}
+      {ConfirmationAlert} 
     
       <div style={{ textAlign: 'center', padding: '20px' }}>
         <IonButton color="medium" className="filter-button" onClick={() => { setFilterStatus(null); setShowParoOptions(false); }}>Todos</IonButton>

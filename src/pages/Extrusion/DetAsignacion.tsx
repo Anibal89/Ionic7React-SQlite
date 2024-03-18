@@ -52,6 +52,7 @@ const DetAsignacion: React.FC<estadoModal> = ({ estado }) => {
     function dismiss() {
       modal.current?.dismiss();
       history.push("/");
+      // seCambio(true);
     }
   
 
