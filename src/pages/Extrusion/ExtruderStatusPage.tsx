@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import {
-  IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton
+  IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonAlert
 } from '@ionic/react';
 import DetAsignacion from './DetAsignacion';
 import './css/ExtruderStatus.css';
 import InvisibleLogin from '../../components/InvisibleLogin';
-import useConfirmationAlert from '../../composables/useConfirmationAlert';
+// import useConfirmationAlert from '../../composables/useConfirmationAlert';
 
 
 enum MachineStatus {
@@ -92,14 +92,14 @@ const getCardColor = (status: MachineStatus): string => {
 };
 
 
-const ExtruderStatusPage: React.FC=() => {
-
-  const [estado,setEstado] = useState<boolean>(true);
-
+const ExtruderStatusPage: React.FC = () => {
+  const [estado, setEstado] = useState<boolean>(true);
   const [filterStatus, setFilterStatus] = useState<MachineStatus | null>(null);
   const [showParoOptions, setShowParoOptions] = useState<boolean>(false);
-  const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false); 
-  const { showConfirmationAlert, ConfirmationAlert } = useConfirmationAlert();
+  const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string>("");
+
 
   // Filtramos las máquinas basándonos en si se seleccionó un estado específico o si estamos viendo todos los paros.
   let filteredMachines: Machine[] = [];
@@ -118,34 +118,37 @@ const ExtruderStatusPage: React.FC=() => {
   }
   
 
-
-
   const handleLoginSuccess = (userId: string) => {
     console.log(`Login exitoso para el usuario: ${userId}`);
-    setUserLoggedIn(true); // Establece que el usuario ha iniciado sesión correctamente
-    showConfirmationAlert(`Bienvenido al sistema, usuario ${userId}.`, () => {});
+    setUserLoggedIn(true);
+    setAlertMessage(`Bienvenido al sistema, usuario ${userId}.`);
+    setShowAlert(true);
     setEstado(true); // Dependiendo de lo que esto signifique en tu contexto
   };
 
   const handleLoginError = () => {
     console.log('Error en el login, código incorrecto');
     setUserLoggedIn(false);
-    showConfirmationAlert("Usuario no encontrado, intente nuevamente.", () => {});
-    setEstado(false); // Asumiendo que esto controla la visualización de algún estado específico
+    setAlertMessage("Usuario no encontrado, intente nuevamente.");
+    setShowAlert(true);
+    setEstado(false);
   };
 
 
-  if (userLoggedIn) {
-   return   <DetAsignacion estado={estado} />; // Si el usuario ha iniciado sesión, muestra directamente el componente DetAsignacion
-   }
 
 
   return (
     <IonContent>
-          <InvisibleLogin onLoginSuccess={handleLoginSuccess} onLoginError={handleLoginError} />
+           <InvisibleLogin onLoginSuccess={handleLoginSuccess} onLoginError={handleLoginError} />
       {userLoggedIn && <DetAsignacion estado={estado} />}
-      {ConfirmationAlert} 
-    
+      
+      <IonAlert
+        isOpen={showAlert}
+        onDidDismiss={() => setShowAlert(false)}
+        header={userLoggedIn ? 'Inicio de Sesión' : 'Error'}
+        message={alertMessage}
+        buttons={['OK']}
+      />
       <div style={{ textAlign: 'center', padding: '20px' }}>
         <IonButton color="medium" className="filter-button" onClick={() => { setFilterStatus(null); setShowParoOptions(false); }}>Todos</IonButton>
         <IonButton color="success" className="filter-button" onClick={() => { setFilterStatus(MachineStatus.Available); setShowParoOptions(false); }}>Disponibles</IonButton>
