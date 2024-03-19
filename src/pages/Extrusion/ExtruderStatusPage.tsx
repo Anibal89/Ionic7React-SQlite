@@ -5,7 +5,6 @@ import {
 import DetAsignacion from './DetAsignacion';
 import './css/ExtruderStatus.css';
 import InvisibleLogin from '../../components/InvisibleLogin';
-// import useConfirmationAlert from '../../composables/useConfirmationAlert';
 
 
 enum MachineStatus {
@@ -93,13 +92,14 @@ const getCardColor = (status: MachineStatus): string => {
 
 
 const ExtruderStatusPage: React.FC = () => {
+  const [showDetAsignacion, setShowDetAsignacion] = useState(false);
   const [estado, setEstado] = useState<boolean>(true);
   const [filterStatus, setFilterStatus] = useState<MachineStatus | null>(null);
   const [showParoOptions, setShowParoOptions] = useState<boolean>(false);
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>("");
-
+  const [countdown, setCountdown] = useState(3); // Comenzará desde 3 segundos
 
   // Filtramos las máquinas basándonos en si se seleccionó un estado específico o si estamos viendo todos los paros.
   let filteredMachines: Machine[] = [];
@@ -119,36 +119,42 @@ const ExtruderStatusPage: React.FC = () => {
   
 
   const handleLoginSuccess = (userId: string) => {
-    console.log(`Login exitoso para el usuario: ${userId}`);
     setUserLoggedIn(true);
+    setCountdown(3); // Reinicia el contador a 3 segundos
+    const interval = setInterval(() => setCountdown(prev => prev - 1), 1000);
     setAlertMessage(`Bienvenido al sistema, usuario ${userId}.`);
     setShowAlert(true);
-    setEstado(true); // Dependiendo de lo que esto signifique en tu contexto
-  };
+    setTimeout(() => {
+      clearInterval(interval); // Detiene el intervalo del contador
+      setShowAlert(false);
+      setShowDetAsignacion(true);
+    }, 3000);
+};
 
-  const handleLoginError = () => {
-    console.log('Error en el login, código incorrecto');
-    setUserLoggedIn(false);
+const handleLoginError = () => {
+    setCountdown(3); // Establece el contador a 2 segundos para el error
+    const interval = setInterval(() => setCountdown(prev => prev - 1), 1000);
     setAlertMessage("Usuario no encontrado, intente nuevamente.");
     setShowAlert(true);
-    setEstado(false);
-  };
-
-
+    setTimeout(() => {
+      clearInterval(interval); // Detiene el intervalo del contador
+      setShowAlert(false);
+    }, 3000);
+};
 
 
   return (
     <IonContent>
            <InvisibleLogin onLoginSuccess={handleLoginSuccess} onLoginError={handleLoginError} />
-      {userLoggedIn && <DetAsignacion estado={estado} />}
-      
-      <IonAlert
-        isOpen={showAlert}
-        onDidDismiss={() => setShowAlert(false)}
-        header={userLoggedIn ? 'Inicio de Sesión' : 'Error'}
-        message={alertMessage}
-        buttons={['OK']}
-      />
+           <IonAlert
+           isOpen={showAlert}
+           onDidDismiss={() => setShowAlert(false)}
+           header={userLoggedIn ? 'Inicio de Sesión' : 'Error'}
+           message={alertMessage + ` Cerrando en ${countdown} segundos...`} // Asegúrate de que este cambio se refleje en tus mensajes
+          //  buttons={['OK']}
+            />
+
+      {showDetAsignacion && <DetAsignacion estado={showDetAsignacion} />}
       <div style={{ textAlign: 'center', padding: '20px' }}>
         <IonButton color="medium" className="filter-button" onClick={() => { setFilterStatus(null); setShowParoOptions(false); }}>Todos</IonButton>
         <IonButton color="success" className="filter-button" onClick={() => { setFilterStatus(MachineStatus.Available); setShowParoOptions(false); }}>Disponibles</IonButton>
