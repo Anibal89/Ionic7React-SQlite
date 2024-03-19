@@ -4,6 +4,7 @@ import "./Home.css";
 import useSQLiteDB from "../composables/useSQLiteDB";
 import useServerDataSender from "../composables/useServerDataSender";
 import useConfirmationAlert from "../composables/useConfirmationAlert"; 
+import { useHistory } from "react-router";
 
 
 interface UserItem {
@@ -63,6 +64,12 @@ const Home: React.FC = () => {
   };
 
   // useServerDataSender({ items }, 15000); 
+  // const history = useHistory();
+
+  // const regresar = ()=>{
+    
+  // }
+
 
   return (
     <IonPage>
@@ -72,6 +79,8 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
+      {/* <IonButton onClick={regresar} color={'dark'}>Ir Usuarios</IonButton> */}
+      <a href="/ExtruderStatusPage">Ir a usuarios</a>
         <div className="ion-padding">
           <IonItem>
             <IonInput

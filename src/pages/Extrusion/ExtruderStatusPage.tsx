@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonAlert
 } from '@ionic/react';
 import DetAsignacion from './DetAsignacion';
 import './css/ExtruderStatus.css';
 import InvisibleLogin from '../../components/InvisibleLogin';
+import { useHistory } from 'react-router';
 
 
 enum MachineStatus {
@@ -92,8 +93,11 @@ const getCardColor = (status: MachineStatus): string => {
 
 
 const ExtruderStatusPage: React.FC = () => {
-  const [showDetAsignacion, setShowDetAsignacion] = useState(false);
-  const [estado, setEstado] = useState<boolean>(true);
+  const [showDetAsignacion, setShowDetAsignacion] = useState<boolean>(false);
+  const [estado, setEstado] = useState<boolean>(false);
+
+  const [islogin, setlogin] = useState<boolean>(false);
+
   const [filterStatus, setFilterStatus] = useState<MachineStatus | null>(null);
   const [showParoOptions, setShowParoOptions] = useState<boolean>(false);
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
@@ -122,6 +126,7 @@ const ExtruderStatusPage: React.FC = () => {
     setUserLoggedIn(true);
     setCountdown(3); // Reinicia el contador a 3 segundos
     const interval = setInterval(() => setCountdown(prev => prev - 1), 1000);
+    setShowDetAsignacion(false);
     setAlertMessage(`Bienvenido al sistema, usuario ${userId}.`);
     setShowAlert(true);
     setTimeout(() => {
@@ -142,9 +147,27 @@ const handleLoginError = () => {
     }, 3000);
 };
 
+const setIslogin =()=>{
+  setlogin(!islogin);
+}
+
+const history = useHistory();
+
+const kirin = ()=>{
+ history.push("/home")
+}
+
+// const kirin2 = ()=>{
+//   setShowDetAsignacion(true);
+// }
+
+console.log("Estado Inicial que pasa al modal "+showDetAsignacion);
+
 
   return (
     <IonContent>
+       <IonButton onClick={kirin} color={'dark'}>Ir Usuarios</IonButton>
+       {/* <IonButton onClick={kirin2} color={'dark'}>login</IonButton> */}
            <InvisibleLogin onLoginSuccess={handleLoginSuccess} onLoginError={handleLoginError} />
            <IonAlert
            isOpen={showAlert}
@@ -153,8 +176,7 @@ const handleLoginError = () => {
            message={alertMessage + ` Cerrando en ${countdown} segundos...`} // Asegúrate de que este cambio se refleje en tus mensajes
           //  buttons={['OK']}
             />
-
-      {showDetAsignacion && <DetAsignacion estado={showDetAsignacion} />}
+      {showDetAsignacion && <DetAsignacion estado={showDetAsignacion} setIslogin={setIslogin}  islogin={islogin}  />}
       <div style={{ textAlign: 'center', padding: '20px' }}>
         <IonButton color="medium" className="filter-button" onClick={() => { setFilterStatus(null); setShowParoOptions(false); }}>Todos</IonButton>
         <IonButton color="success" className="filter-button" onClick={() => { setFilterStatus(MachineStatus.Available); setShowParoOptions(false); }}>Disponibles</IonButton>

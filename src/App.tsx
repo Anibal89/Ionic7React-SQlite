@@ -40,9 +40,6 @@ const App: React.FC = () => (
         <Route exact path="/">
           <Redirect to="/ExtruderStatusPage"/>
         </Route>
-        <Route exact path="/DetAsignacion">
-           <DetAsignacion estado = {false}/>
-        </Route>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
