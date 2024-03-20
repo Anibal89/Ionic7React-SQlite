@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonAlert, IonModal
+  IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonAlert, IonModal, IonHeader, IonToolbar, IonButtons, IonTitle, IonItem, IonInput
 } from '@ionic/react';
 import DetAsignacion from './DetAsignacion';
 import './css/ExtruderStatus.css';
@@ -108,6 +108,7 @@ const ExtruderStatusPage: React.FC = () => {
   const [countdown, setCountdown] = useState(3); // Comenzará desde 3 segundos
   const [showMachineDetails, setShowMachineDetails] = useState<boolean>(false);
   const [selectedMachine, setSelectedMachine] = useState<Machine | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   // Filtramos las máquinas basándonos en si se seleccionó un estado específico o si estamos viendo todos los paros.
   let filteredMachines: Machine[] = [];
@@ -179,7 +180,7 @@ console.log("Estado Inicial que pasa al modal "+showDetAsignacion);
     <IonContent>
        <IonButton onClick={kirin} color={'dark'}>Ir Usuarios</IonButton>
        {/* <IonButton onClick={kirin2} color={'dark'}>login</IonButton> */}
-           <InvisibleLogin onLoginSuccess={handleLoginSuccess} onLoginError={handleLoginError} isUserLoggedIn={userLoggedIn}/>
+           <InvisibleLogin onLoginSuccess={handleLoginSuccess} onLoginError={handleLoginError}/>
            <IonAlert
            isOpen={showAlert}
            onDidDismiss={() => setShowAlert(false)}
@@ -206,43 +207,50 @@ console.log("Estado Inicial que pasa al modal "+showDetAsignacion);
       )}
 
 <IonGrid>
-        <IonRow>
-          {machines.map((machine, index) => (
-            <IonCol key={index} size="6" size-md="3" size-lg="2">
-              <IonCard onClick={() => openMachineDetails(machine)} color={getCardColor(machine.status)}>
-                <IonCardHeader className="card-header-custom">
-                  <div className="machine-icon">
-                    <img src="https://i.ibb.co/ZggmBMR/extrusora.png" alt="Extrusora" style={{ width: '70px', marginRight: '10px' }} />
-                  </div>
-                  <IonCardTitle>Extrusora {machine.id}</IonCardTitle>
-                </IonCardHeader>
-                <IonCardContent>
-                  Estado: {machine.status}
-                </IonCardContent>
-              </IonCard>
-            </IonCol>
-          ))}
-        </IonRow>
-      </IonGrid>
-      
-      <IonModal className='size-modal' isOpen={showMachineDetails} onDidDismiss={() => setShowMachineDetails(false)}>
-        <IonContent className="ion-padding">
-          <h2>Detalles de la Máquina</h2>
-          {selectedMachine && (
-            <div>
-              <p>ID: {selectedMachine.id}</p>
-              <p>Estado: {selectedMachine.status}</p>
-              <p>Nombre: Israel</p>
-              <p>Bobinas producidas: 2 bobinas</p>
-              <p>Hora trabajadas: 05:00 horas</p>
-              <p>Bobinas producidas: 2 bobinas</p>
-              {/* Agrega más detalles según sea necesario */}
+  <IonRow>
+    {filteredMachines.map((machine, index) => (
+      <IonCol key={index} size="6" size-md="3" size-lg="2">
+        <IonCard onClick={() => openMachineDetails(machine)} color={getCardColor(machine.status)}>
+          <IonCardHeader className="card-header-custom">
+            <div className="machine-icon">
+              <img src={"https://i.ibb.co/ZggmBMR/extrusora.png"} alt="Extrusora" style={{ width: '70px', marginRight: '10px' }} />
             </div>
-          )}
+            <IonCardTitle>Extrusora {machine.id}</IonCardTitle>
+          </IonCardHeader>
+          <IonCardContent>
+            Estado: {machine.status}
+            {/* Agrega más detalles si son necesarios */}
+          </IonCardContent>
+        </IonCard>
+      </IonCol>
+    ))}
+  </IonRow>
+</IonGrid>
+
+
+<IonModal isOpen={showMachineDetails} onDidDismiss={() => setShowMachineDetails(false)}>
+  <IonContent className="ion-padding">
+    <IonHeader>
+      <IonToolbar>
+        <IonTitle>Detalles de la Máquina</IonTitle>
+        <IonButtons slot="end">
           <IonButton onClick={() => setShowMachineDetails(false)}>Cerrar</IonButton>
-        </IonContent>
-      </IonModal>
- 
+        </IonButtons>
+      </IonToolbar>
+    </IonHeader>
+    {selectedMachine && (
+      <div style={{ textAlign: 'center' }}>
+        <img src={'https://i.ibb.co/ZggmBMR/extrusora.png'} alt="Extrusora" style={{ width: '150px', margin: '20px auto' }} />
+        <h2>Extrusora {selectedMachine.id}</h2>
+        <p><strong>ID:</strong> {selectedMachine.id}</p>
+        <p><strong>Estado:</strong> {selectedMachine.status}</p>
+       
+        {/* Agrega más detalles según sea necesario */}
+      </div>
+    )}
+  </IonContent>
+</IonModal>
+
     </IonContent>
   );
 };
