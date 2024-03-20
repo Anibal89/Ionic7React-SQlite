@@ -122,12 +122,12 @@ const ExtruderStatusPage: React.FC = () => {
   }
   
 
-  const handleLoginSuccess = (userId: string) => {
+  const handleLoginSuccess = (userName: string) => {
     setUserLoggedIn(true);
     setCountdown(3); // Reinicia el contador a 3 segundos
     const interval = setInterval(() => setCountdown(prev => prev - 1), 1000);
     setShowDetAsignacion(false);
-    setAlertMessage(`Bienvenido al sistema, usuario ${userId}.`);
+    setAlertMessage(`Bienvenido al sistema, usuario ${userName}.`); // Cambiado para mostrar el userName
     setShowAlert(true);
     setTimeout(() => {
       clearInterval(interval); // Detiene el intervalo del contador
@@ -135,6 +135,7 @@ const ExtruderStatusPage: React.FC = () => {
       setShowDetAsignacion(true);
     }, 3000);
 };
+
 
 const handleLoginError = () => {
     setCountdown(3); // Establece el contador a 2 segundos para el error
