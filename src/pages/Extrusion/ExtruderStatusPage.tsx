@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonAlert
+  IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonAlert, IonModal
 } from '@ionic/react';
 import DetAsignacion from './DetAsignacion';
 import './css/ExtruderStatus.css';
@@ -106,6 +106,8 @@ const ExtruderStatusPage: React.FC = () => {
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>("");
   const [countdown, setCountdown] = useState(3); // Comenzará desde 3 segundos
+  const [showMachineDetails, setShowMachineDetails] = useState<boolean>(false);
+  const [selectedMachine, setSelectedMachine] = useState<Machine | null>(null);
 
   // Filtramos las máquinas basándonos en si se seleccionó un estado específico o si estamos viendo todos los paros.
   let filteredMachines: Machine[] = [];
@@ -165,6 +167,11 @@ const kirin = ()=>{
 //   setShowDetAsignacion(true);
 // }
 
+const openMachineDetails = (machine: Machine) => {
+  setSelectedMachine(machine); // Establece la máquina seleccionada
+  setShowMachineDetails(true); // Muestra el modal con los detalles
+};
+
 console.log("Estado Inicial que pasa al modal "+showDetAsignacion);
 
 
@@ -198,11 +205,11 @@ console.log("Estado Inicial que pasa al modal "+showDetAsignacion);
         </div>
       )}
 
-      <IonGrid>
+<IonGrid>
         <IonRow>
-          {filteredMachines.map((machine, index) => (
+          {machines.map((machine, index) => (
             <IonCol key={index} size="6" size-md="3" size-lg="2">
-              <IonCard color={getCardColor(machine.status)}>
+              <IonCard onClick={() => openMachineDetails(machine)} color={getCardColor(machine.status)}>
                 <IonCardHeader className="card-header-custom">
                   <div className="machine-icon">
                     <img src="https://i.ibb.co/ZggmBMR/extrusora.png" alt="Extrusora" style={{ width: '70px', marginRight: '10px' }} />
@@ -210,13 +217,28 @@ console.log("Estado Inicial que pasa al modal "+showDetAsignacion);
                   <IonCardTitle>Extrusora {machine.id}</IonCardTitle>
                 </IonCardHeader>
                 <IonCardContent>
-                  {/* Detalles adicionales si son necesarios */}
+                  Estado: {machine.status}
                 </IonCardContent>
               </IonCard>
             </IonCol>
           ))}
         </IonRow>
       </IonGrid>
+      
+      <IonModal isOpen={showMachineDetails} onDidDismiss={() => setShowMachineDetails(false)}>
+        <IonContent className="ion-padding">
+          <h2>Detalles de la Máquina</h2>
+          {selectedMachine && (
+            <div>
+              <p>ID: {selectedMachine.id}</p>
+              <p>Estado: {selectedMachine.status}</p>
+              {/* Agrega más detalles según sea necesario */}
+            </div>
+          )}
+          <IonButton onClick={() => setShowMachineDetails(false)}>Cerrar</IonButton>
+        </IonContent>
+      </IonModal>
+ 
     </IonContent>
   );
 };
