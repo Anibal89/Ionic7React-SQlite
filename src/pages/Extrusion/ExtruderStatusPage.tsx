@@ -94,7 +94,7 @@ const getCardColor = (status: MachineStatus): string => {
 
 const ExtruderStatusPage: React.FC = () => {
   const [showDetAsignacion, setShowDetAsignacion] = useState<boolean>(false);
-  const [estado, setEstado] = useState<boolean>(false);
+  const [userName, setuserName] = useState<string>("");
 
   const [islogin, setlogin] = useState<boolean>(false);
 
@@ -124,6 +124,7 @@ const ExtruderStatusPage: React.FC = () => {
 
   const handleLoginSuccess = (userName: string) => {
     setUserLoggedIn(true);
+    setuserName(userName);
     setCountdown(3); // Reinicia el contador a 3 segundos
     const interval = setInterval(() => setCountdown(prev => prev - 1), 1000);
     setShowDetAsignacion(false);
@@ -177,7 +178,7 @@ console.log("Estado Inicial que pasa al modal "+showDetAsignacion);
            message={alertMessage + ` Cerrando en ${countdown} segundos...`} // Asegúrate de que este cambio se refleje en tus mensajes
           //  buttons={['OK']}
             />
-      {showDetAsignacion && <DetAsignacion estado={showDetAsignacion} setIslogin={setIslogin}  islogin={islogin}  />}
+      {showDetAsignacion && <DetAsignacion estado={showDetAsignacion} setIslogin={setIslogin}  islogin={islogin}  userName={userName}  />}
       <div style={{ textAlign: 'center', padding: '20px' }}>
         <IonButton color="medium" className="filter-button" onClick={() => { setFilterStatus(null); setShowParoOptions(false); }}>Todos</IonButton>
         <IonButton color="success" className="filter-button" onClick={() => { setFilterStatus(MachineStatus.Available); setShowParoOptions(false); }}>Disponibles</IonButton>

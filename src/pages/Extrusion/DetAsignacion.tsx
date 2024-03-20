@@ -36,9 +36,10 @@ interface estadoModal {
   estado: boolean;
   islogin: boolean;
   setIslogin: ()=>void;
+  userName: string;
 }
 
-const DetAsignacion: React.FC<estadoModal> = ({ estado, islogin, setIslogin }) => {
+const DetAsignacion: React.FC<estadoModal> = ({ estado, islogin, setIslogin,userName }) => {
 
   // Estado para validar si esta logueado
   
@@ -192,7 +193,7 @@ const DetAsignacion: React.FC<estadoModal> = ({ estado, islogin, setIslogin }) =
                         }}
                       />
                       <IonCardHeader>
-                        <IonCardTitle>Israel de leon</IonCardTitle>
+                        <IonCardTitle>{userName}</IonCardTitle>
                         <IonCardSubtitle>Extrusion</IonCardSubtitle>
                       </IonCardHeader>
                       <IonCardContent></IonCardContent>
