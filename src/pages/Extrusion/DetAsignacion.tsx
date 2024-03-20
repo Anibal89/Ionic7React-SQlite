@@ -91,7 +91,7 @@ const DetAsignacion: React.FC<estadoModal> = ({ estado, islogin, setIslogin }) =
           <IonToolbar>
             <IonTitle>Operacion Extrusion</IonTitle>
             <IonButtons slot="end">
-              <IonButton onClick={() => dismiss()}>
+              <IonButton onClick={() => dismiss2()}>
                 <IonIcon icon={close} color="danger"></IonIcon>
               </IonButton>
             </IonButtons>
@@ -109,7 +109,7 @@ const DetAsignacion: React.FC<estadoModal> = ({ estado, islogin, setIslogin }) =
                 >
                   <IonRow className="ion-justify-content-center">
                     <IonCol size="auto">
-                      <IonButton onClick={dismiss2} color={"light"}>
+                      <IonButton onClick={dismiss} color={"light"}>
                         <div
                           style={{
                             display: "flex",
@@ -149,7 +149,7 @@ const DetAsignacion: React.FC<estadoModal> = ({ estado, islogin, setIslogin }) =
                     </IonCol>
     
                     <IonCol size="auto">
-                      <IonButton onClick={dismiss2} color={"light"}>
+                      <IonButton onClick={dismiss} color={"light"}>
                         <div
                           style={{
                             display: "flex",
@@ -158,7 +158,7 @@ const DetAsignacion: React.FC<estadoModal> = ({ estado, islogin, setIslogin }) =
                             justifyContent: "center",
                           }}
                         >
-                          <IonText>Salir</IonText>
+                          <IonText>Cerrar Jornada</IonText>
                           <img
                             src="https://files.signuscorp.com/?business=1&file=MTY1Zjg4NDQxOGM4NDY="
                             alt="close"
