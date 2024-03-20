@@ -91,16 +91,22 @@ const useSQLiteDB = () => {
     return users;
   };
 
-  const checkUserExists = async (userId: number): Promise<boolean> => {
+  const checkUserExists = async (userId: number): Promise<{exists: boolean, userName: string | null}> => {
     let userExists = false;
+    let userName = null; // Variable para almacenar el nombre del usuario si existe
+  
     await performSQLAction(async (db: SQLiteDBConnection) => {
       const result = await db.query(`SELECT * FROM Users WHERE id = ?`, [userId]);
       if (result.values && result.values.length > 0) {
         userExists = true;
+        userName = result.values[0].name;
+        console.log(`User exists: ${userExists}, UserName: ${userName}`); // Agregamos un log para verificar
       }
     });
-    return userExists;
+  
+    return {exists: userExists, userName: userName};
   };
+  
 
   const addUser = async (userId: number, userName: string): Promise<void> => {
     await performSQLAction(async (db: SQLiteDBConnection) => {
