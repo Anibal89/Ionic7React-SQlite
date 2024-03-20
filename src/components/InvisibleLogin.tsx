@@ -54,6 +54,7 @@ const InvisibleLogin: React.FC<Props> = ({ onLoginSuccess, onLoginError }) => {
       type="text"
       value={buffer}
       readOnly
+      disabled
       style={{ backgroundColor: '#fff', border: "none", color: '#000'}} // Ajusta el estilo según necesites
     />
   );
