@@ -35,14 +35,18 @@ import { Redirect, useHistory } from "react-router";
 interface estadoModal {
   estado: boolean;
   islogin: boolean;
-  setIslogin: ()=>void;
+  setIslogin: () => void;
   userName: string;
 }
 
-const DetAsignacion: React.FC<estadoModal> = ({ estado, islogin, setIslogin,userName }) => {
-
+const DetAsignacion: React.FC<estadoModal> = ({
+  estado,
+  islogin,
+  setIslogin,
+  userName,
+}) => {
   // Estado para validar si esta logueado
-  
+
   const modal = useRef<HTMLIonModalElement>(null);
   const page = useRef(null);
 
@@ -76,8 +80,7 @@ const DetAsignacion: React.FC<estadoModal> = ({ estado, islogin, setIslogin,user
 
   const { Id, Maquina, Detalle_Material, Foto, Estado, Hora } = OrdenTrabajo;
 
-  
-  console.log("El estado logeado es es:" + islogin + " estado: " + estado );
+  console.log("El estado logeado es es:" + islogin + " estado: " + estado);
 
   return (
     <>
@@ -100,80 +103,81 @@ const DetAsignacion: React.FC<estadoModal> = ({ estado, islogin, setIslogin,user
         </IonHeader>
         <IonContent className="ion-padding">
           {islogin ? (
-                  <IonGrid
-                  className="ion-text-center"
-                  style={{
-                    margin: "auto",
-                    marginTop: "50vh",
-                    transform: "translateY(-50%)",
-                  }}
-                >
-                  <IonRow className="ion-justify-content-center">
-                    <IonCol size="auto">
-                      <IonButton onClick={dismiss} color={"light"}>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "8px",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <IonText>Devolver Material</IonText>
-                          <img
-                            src="https://files.signuscorp.com/?business=1&file=MTY1Zjg4ODU3NDkyNDM="
-                            alt="close"
-                            style={{ width: "25px", marginRight: "10px" }}
-                          />
-                        </div>
-                      </IonButton>
-                    </IonCol>
-    
-                    <IonCol size="auto">
-                      <IonButton onClick={dismiss} color={"medium"}>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "8px",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <IonText>Registrar Bobina</IonText>
-                          <img
-                            src="https://files.signuscorp.com/?business=1&file=MTY1Zjg4NjZhNzA5MDk="
-                            alt="close"
-                            style={{ width: "30px", marginRight: "10px" }}
-                          />
-                        </div>
-                      </IonButton>
-                    </IonCol>
-    
-                    <IonCol size="auto">
-                      <IonButton onClick={dismiss} color={"light"}>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "8px",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <IonText>Cerrar Jornada</IonText>
-                          <img
-                            src="https://files.signuscorp.com/?business=1&file=MTY1Zjg4NDQxOGM4NDY="
-                            alt="close"
-                            style={{ width: "25px", marginRight: "10px" }}
-                          />
-                        </div>
-                      </IonButton>
-                    </IonCol>
-                  </IonRow>
-                </IonGrid>
-            
-          ) : (
+            <IonGrid
+              className="ion-text-center"
+              style={{
+                // margin: "auto",
+                marginTop: "50vh",
+                transform: "translateY(-70%)",
+                
+              }}
+            >
+              <IonRow className="ion-justify-content-center boxRow" >
+                <IonCol size="auto">
+                  <IonButton onClick={dismiss} color={"light"} className="Box-Button">
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: "5px",
+                      }}
+                    >
+                      <IonText>Devolver Material</IonText>
+                      <img
+                        src="https://files.signuscorp.com/?business=1&file=MTY1Zjg4ODU3NDkyNDM="
+                        alt="close"
+                        style={{ width: "90px", marginTop: "5px" }}
+                      />
+                    </div>
+                  </IonButton>
+                </IonCol>
 
-<IonGrid className="ion-padding">
+                <IonCol size="auto">
+              
+                    <IonButton onClick={dismiss} color={"medium"} className="Box-Button">
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          gap: "5px",
+                        }}
+                      >
+                        <IonText>Registrar Bobina</IonText>
+                        <img
+                          src="https://files.signuscorp.com/?business=1&file=MTY1Zjg4NjZhNzA5MDk="
+                          alt="close"
+                          style={{ width: "106px", marginTop: "5px" }}
+                        />
+                      </div>
+                    </IonButton>
+                    
+                </IonCol>
+
+                <IonCol size="auto">
+                  <IonButton onClick={dismiss} color={"light"} className="Box-Button">
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: "5px",
+                      }}
+                    >
+                      <IonText>Cerrar Jornada</IonText>
+                      <img
+                        src="https://files.signuscorp.com/?business=1&file=MTY1Zjg4NDQxOGM4NDY="
+                        alt="close"
+                        style={{ width: "90px", marginTop: "5px" }}
+                      />
+                    </div>
+                  </IonButton>
+                </IonCol>
+              </IonRow>
+            </IonGrid>
+          ) : (
+            <IonGrid className="ion-padding">
               <IonRow style={{ columnGap: "2rem" }}>
                 <IonCol>
                   <IonRow className="ion-justify-content-center">
