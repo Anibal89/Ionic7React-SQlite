@@ -75,8 +75,10 @@ const machines: Machine[] = [
   { id: 'M50', status: MachineStatus.ParoMecanico },
   { id: 'M51', status: MachineStatus.InUse },
   { id: 'M52', status: MachineStatus.Available },
-  { id: 'M53', status: MachineStatus.ParoCalidad }
+  { id: 'M53', status: MachineStatus.ParoCalidad },
+  { id: 'M54', status: MachineStatus.InUse }
 ];
+
 
 
 const getCardColor = (status: MachineStatus): string => {
@@ -128,7 +130,7 @@ const ExtruderStatusPage: React.FC = () => {
     setCountdown(3); // Reinicia el contador a 3 segundos
     const interval = setInterval(() => setCountdown(prev => prev - 1), 1000);
     setShowDetAsignacion(false);
-    setAlertMessage(`Bienvenido al sistema, usuario ${userName}.`); // Cambiado para mostrar el userName
+    setAlertMessage(`✔️ Bienvenido al sistema, usuario ${userName}.`); // Cambiado para mostrar el userName
     setShowAlert(true);
     setTimeout(() => {
       clearInterval(interval); // Detiene el intervalo del contador
@@ -141,7 +143,7 @@ const ExtruderStatusPage: React.FC = () => {
 const handleLoginError = () => {
     setCountdown(3); // Establece el contador a 2 segundos para el error
     const interval = setInterval(() => setCountdown(prev => prev - 1), 1000);
-    setAlertMessage("Usuario no encontrado, intente nuevamente.");
+    setAlertMessage("❌ Usuario no encontrado, intente nuevamente.");
     setShowAlert(true);
     setTimeout(() => {
       clearInterval(interval); // Detiene el intervalo del contador
@@ -170,13 +172,14 @@ console.log("Estado Inicial que pasa al modal "+showDetAsignacion);
     <IonContent>
        <IonButton onClick={kirin} color={'dark'}>Ir Usuarios</IonButton>
        {/* <IonButton onClick={kirin2} color={'dark'}>login</IonButton> */}
-           <InvisibleLogin onLoginSuccess={handleLoginSuccess} onLoginError={handleLoginError} />
+           <InvisibleLogin onLoginSuccess={handleLoginSuccess} onLoginError={handleLoginError} isUserLoggedIn={userLoggedIn}/>
            <IonAlert
            isOpen={showAlert}
            onDidDismiss={() => setShowAlert(false)}
            header={userLoggedIn ? 'Inicio de Sesión' : 'Error'}
            message={alertMessage + ` Cerrando en ${countdown} segundos...`} // Asegúrate de que este cambio se refleje en tus mensajes
           //  buttons={['OK']}
+          
             />
       {showDetAsignacion && <DetAsignacion estado={showDetAsignacion} setIslogin={setIslogin}  islogin={islogin}  userName={userName}  />}
       <div style={{ textAlign: 'center', padding: '20px' }}>

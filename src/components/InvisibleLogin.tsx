@@ -2,39 +2,42 @@ import React, { useState, useEffect } from 'react';
 import useSQLiteDB from '../composables/useSQLiteDB';
 
 type Props = {
-  onLoginSuccess: (userId: string) => void;
+  onLoginSuccess: (userName: string) => void;
   onLoginError: () => void;
+  isUserLoggedIn: boolean; // Agrega esta línea para recibir el nuevo prop
 };
 
-const InvisibleLogin: React.FC<Props> = ({ onLoginSuccess, onLoginError }) => {
+const InvisibleLogin: React.FC<Props> = ({ onLoginSuccess, onLoginError, isUserLoggedIn }) => {
   const [buffer, setBuffer] = useState<string>('');
   const [lastKeyTime, setLastKeyTime] = useState<Date>(new Date());
   const { checkUserExists, initialized } = useSQLiteDB();
 
   useEffect(() => {
+    if (isUserLoggedIn) return; // No ejecutar si el usuario ya está logueado
+
     const handleKeyDown = (event: KeyboardEvent) => {
       const keyTime = new Date();
       const diff = keyTime.getTime() - lastKeyTime.getTime();
-  
+
       if (diff < 550) {
         setBuffer(prev => prev + event.key);
       } else {
         setBuffer(event.key);
       }
-  
+
       setLastKeyTime(keyTime);
-  
+
       if (event.key === 'Enter' && buffer) {
         if (initialized) {
           const userId = parseInt(buffer, 10);
           if (!isNaN(userId)) {
             checkUserExists(userId).then(({ exists, userName }) => {
               if (exists && userName) {
-                onLoginSuccess(userName); // Ahora pasas solo el userName
+                onLoginSuccess(userName); // Pasa el nombre de usuario
               } else {
-                onLoginError(); // Se invoca si el usuario no existe o no se encontró el nombre de usuario
+                onLoginError(); // Maneja el error
               }
-              setBuffer(''); // Limpia el buffer independientemente del resultado
+              setBuffer(''); // Limpia el buffer
             });
           } else {
             onLoginError();
@@ -43,11 +46,10 @@ const InvisibleLogin: React.FC<Props> = ({ onLoginSuccess, onLoginError }) => {
         }
       }
     };
-  
+
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [buffer, lastKeyTime, initialized, onLoginSuccess, onLoginError, checkUserExists]);
-  
+  }, [buffer, lastKeyTime, initialized, onLoginSuccess, onLoginError, checkUserExists, isUserLoggedIn]); // Añade isUserLoggedIn a las dependencias del useEffect
 
   return (
     <input
