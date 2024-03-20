@@ -225,13 +225,17 @@ console.log("Estado Inicial que pasa al modal "+showDetAsignacion);
         </IonRow>
       </IonGrid>
       
-      <IonModal isOpen={showMachineDetails} onDidDismiss={() => setShowMachineDetails(false)}>
+      <IonModal className='size-modal' isOpen={showMachineDetails} onDidDismiss={() => setShowMachineDetails(false)}>
         <IonContent className="ion-padding">
           <h2>Detalles de la Máquina</h2>
           {selectedMachine && (
             <div>
               <p>ID: {selectedMachine.id}</p>
               <p>Estado: {selectedMachine.status}</p>
+              <p>Nombre: Israel</p>
+              <p>Bobinas producidas: 2 bobinas</p>
+              <p>Hora trabajadas: 05:00 horas</p>
+              <p>Bobinas producidas: 2 bobinas</p>
               {/* Agrega más detalles según sea necesario */}
             </div>
           )}

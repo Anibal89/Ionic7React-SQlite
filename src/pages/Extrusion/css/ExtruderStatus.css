@@ -27,4 +27,9 @@
     border-radius: 20px; /* Bordes redondeados */
   }
   
-  
+  .size-modal{
+      --height: 50vh; /* Altura igual a la altura de la ventana */
+      --width: 50vw; /* Ancho igual al ancho de la ventana */
+      --max-width: 30%; /* Ancho máximo para asegurar que no sea demasiado grande */
+      --max-height: 50%; /* Altura máxima para asegurar que no sea demasiado grande */
+  }
