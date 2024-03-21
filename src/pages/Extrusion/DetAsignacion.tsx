@@ -125,7 +125,7 @@ const DetAsignacion: React.FC<estadoModal> = ({
                     >
                       <IonText>Devolver Material</IonText>
                       <img
-                        src="https://files.signuscorp.com/?business=1&file=MTY1Zjg4ODU3NDkyNDM="
+                        src="https://i.postimg.cc/3RC6MRxV/pngwing-com-6.png"
                         alt="close"
                         style={{ width: "90px", marginTop: "5px" }}
                       />
@@ -167,7 +167,7 @@ const DetAsignacion: React.FC<estadoModal> = ({
                       >
                         <IonText>Registrar Bobina</IonText>
                         <img
-                          src="https://files.signuscorp.com/?business=1&file=MTY1Zjg4NjZhNzA5MDk="
+                          src="https://i.postimg.cc/9XPVVmkW/pngwing-com-5.png"
                           alt="close"
                           style={{ width: "106px", marginTop: "5px" }}
                         />
@@ -188,7 +188,7 @@ const DetAsignacion: React.FC<estadoModal> = ({
                     >
                       <IonText>Cerrar Jornada</IonText>
                       <img
-                        src="https://files.signuscorp.com/?business=1&file=MTY1Zjg4NDQxOGM4NDY="
+                        src="https://i.postimg.cc/C5CwQY3x/pngwing-com-4.png"
                         alt="close"
                         style={{ width: "90px", marginTop: "5px" }}
                       />
@@ -215,6 +215,8 @@ const DetAsignacion: React.FC<estadoModal> = ({
                           width: "200px",
                           height: "200px",
                           marginTop: "2rem",
+                          border:'3px solid black'
+                          ,
                         }}
                       />
                       <IonCardHeader>
