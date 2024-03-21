@@ -85,6 +85,19 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen class="ion-padding">
+      <a
+          style={{
+            padding: "4px 25px",
+            background: "black",
+            color: "white",
+            borderRadius: "4px",
+            textDecoration: "none",
+            border: "1px solid black",
+          }}
+          href="/ExtruderStatusPage"
+        >
+          Regresar
+        </a>
         <IonGrid>
           <IonRow>
             <IonCol size="6">
