@@ -1,3 +1,15 @@
+:root {
+  --ion-color-primary: #387ef5; /* Azul más oscuro */
+  --ion-color-secondary: #11aaaa; /* Verde más oscuro */
+  --ion-color-tertiary: #5e5ce6; /* Morado más oscuro */
+  --ion-color-success: #0ec254; /* Verde éxito más oscuro */
+  --ion-color-warning: #e0b400; /* Amarillo advertencia más oscuro */
+  --ion-color-danger: #d33939; /* Rojo peligro más oscuro */
+  --ion-color-dark: #1e2023; /* Casi negro */
+  --ion-color-medium: #737373; /* Gris más oscuro */
+}
+
+
 .card-header-custom {
     display: flex;
     align-items: center;
