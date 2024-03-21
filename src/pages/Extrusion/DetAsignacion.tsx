@@ -134,6 +134,27 @@ const DetAsignacion: React.FC<estadoModal> = ({
                 </IonCol>
 
                 <IonCol size="auto">
+                  <IonButton onClick={dismiss} color={"medium"} className="Box-Button">
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: "5px",
+                      }}
+                    >
+                      <IonText>Medidas Asignadas </IonText>
+                      <img
+                        src="https://i.postimg.cc/52yyrWjx/pngegg-1.png"
+                        alt="close"
+                        style={{ width: "90px", marginTop: "5px" }}
+                      />
+                    </div>
+                  </IonButton>
+                </IonCol>
+                
+
+                <IonCol size="auto">
               
                     <IonButton onClick={dismiss} color={"medium"} className="Box-Button">
                       <div

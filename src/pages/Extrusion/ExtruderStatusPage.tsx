@@ -20,7 +20,10 @@ enum MachineStatus {
 type Machine = {
   id: string;
   status: MachineStatus;
+  userB?:string;
 }
+
+
 
 const machines: Machine[] = [
   { id: 'M1', status: MachineStatus.Available },
@@ -32,7 +35,7 @@ const machines: Machine[] = [
   { id: 'M7', status: MachineStatus.Available },
   { id: 'M8', status: MachineStatus.ParoCalidad },
   { id: 'M9', status: MachineStatus.Available },
-  { id: 'M10', status: MachineStatus.InUse },
+  { id: 'M10', status: MachineStatus.InUse , userB:"Usuario 1" },
   { id: 'M11', status: MachineStatus.ParoInsumos },
   { id: 'M12', status: MachineStatus.Available },
   { id: 'M13', status: MachineStatus.ParoElectrico },
@@ -94,7 +97,8 @@ const getCardColor = (status: MachineStatus): string => {
 };
 
 
-const ExtruderStatusPage: React.FC = () => {
+const ExtruderStatusPage: React.FC=() => {
+  
   const [showDetAsignacion, setShowDetAsignacion] = useState<boolean>(false);
   const [userName, setuserName] = useState<string>("");
 
@@ -125,6 +129,8 @@ const ExtruderStatusPage: React.FC = () => {
       machine.status === MachineStatus.ParoCalidad || 
       machine.status === MachineStatus.ParoInsumos);
   }
+  
+
   
 
   const handleLoginSuccess = (userName: string) => {
@@ -244,6 +250,8 @@ console.log("Estado Inicial que pasa al modal "+showDetAsignacion);
         <h2>Extrusora {selectedMachine.id}</h2>
         <p><strong>ID:</strong> {selectedMachine.id}</p>
         <p><strong>Estado:</strong> {selectedMachine.status}</p>
+       
+        {selectedMachine.id==="M10" ? <p><strong>Nombre:</strong>{userName}</p>: <></>}
        
         {/* Agrega más detalles según sea necesario */}
       </div>

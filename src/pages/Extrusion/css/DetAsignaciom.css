@@ -17,5 +17,5 @@
 
 .boxRow{
   display: flex;
-  column-gap: 5rem;
+  column-gap: 3rem;
 }

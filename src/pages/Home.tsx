@@ -5,6 +5,7 @@ import useSQLiteDB from "../composables/useSQLiteDB";
 import useServerDataSender from "../composables/useServerDataSender";
 import useConfirmationAlert from "../composables/useConfirmationAlert"; 
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 
 
 interface UserItem {
@@ -78,9 +79,10 @@ const Home: React.FC = () => {
           <IonTitle>Unisa Producción</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen class="ion-padding">
       {/* <IonButton onClick={regresar} color={'dark'}>Ir Usuarios</IonButton> */}
-      <a href="/ExtruderStatusPage">Ir a usuarios</a>
+      <a  style={{padding:'4px 25px', background:'black', color:'white', borderRadius:'4px', textDecoration:'none', border: '1px solid black'}}  href="/ExtruderStatusPage">Regresar</a>
+    
         <div className="ion-padding">
           <IonItem>
             <IonInput
