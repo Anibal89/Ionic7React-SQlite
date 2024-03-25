@@ -19,6 +19,7 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 // import './theme/variables.css';
 import DetAsignacion from './pages/Extrusion/DetAsignacion';
+import Bodega from './pages/Bodega/Bodega';
 
 setupIonicReact();
 const App: React.FC = () => (
@@ -39,6 +40,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/">
           <Redirect to="/ExtruderStatusPage"/>
+        </Route>
+        <Route exact path="/bodega">
+          <Bodega/>
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>

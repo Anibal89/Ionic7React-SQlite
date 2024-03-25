@@ -1,0 +1,35 @@
+.Modal_Bodega {
+    --height: 70%; /* Altura igual a la altura de la ventana */
+    --width: 100vw; /* Ancho igual al ancho de la ventana */
+    --max-width: 80%; /* Ancho máximo para asegurar que no sea demasiado grande */
+    --max-height: 70%; /* Altura máxima para asegurar que no sea demasiado grande */
+}
+
+.Modal_Bodega2{
+    --height: 26%; /* Altura igual a la altura de la ventana */
+    --width: 40vw; /* Ancho igual al ancho de la ventana */
+    --max-width: 40%; /* Ancho máximo para asegurar que no sea demasiado grande */
+    --max-height: 26%; /* Altura máxima para asegurar que no sea demasiado grande */
+    --border-radius:10px
+}
+
+.contentb{
+   display: flex;
+   gap: 25px ; 
+   justify-content: center;
+   margin-top: 20px;
+ }
+
+ .usuario_bodega{
+    display: flex;
+    gap: 7px;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+ }
+
+ .Paginado{
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+ }
